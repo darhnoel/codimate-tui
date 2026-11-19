@@ -1,0 +1,7 @@
+[workspace]
+resolver = "3"
+members = ["crates/codimate-tui-core", "crates/codimate-tui-py"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"

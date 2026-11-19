@@ -1,0 +1,13 @@
+[package]
+name = "codimate-tui-core"
+description = "The engine: motion, timeline, rendering and the terminal player. Knows nothing about Python."
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+ab_glyph = "0.2.32"
+ratatui = "0.29"
+rustybuzz = "0.20.1"
+unicode-segmentation = "1"
+unicode-width = "0.2"
+

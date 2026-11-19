@@ -1,0 +1,17 @@
+[package]
+name = "codimate-tui-py"
+description = "The bridge: turns Python's payload into engine values. Translation only."
+version.workspace = true
+edition.workspace = true
+
+[lib]
+name = "_codimate_tui"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+codimate-tui-core = { path = "../codimate-tui-core" }
+pyo3 = { version = "0.30", features = ["abi3-py39"] }
+
+# maturin turns this on for wheels; off by default so `cargo test` still links.
+[features]
+extension-module = ["pyo3/extension-module"]
