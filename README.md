@@ -22,10 +22,13 @@ ct.explain(tr, view, motion=[ct.Rule("tok/*", arc=2)]).play()
 ```bash
 python3 -m venv .venv && .venv/bin/pip install maturin pytest
 .venv/bin/maturin develop --release
-.venv/bin/python examples/keynote.py
+.venv/bin/python examples/intro.py
 ```
 
-Other examples are in [examples/](examples/).
+[examples/intro.py](examples/intro.py) is a short deck that introduces codimate-tui.
+It draws with half blocks (`pixels="half"`), which every terminal shows cleanly,
+macOS Terminal included. The finer `quad` and `sextant` modes need a terminal
+that draws those blocks itself, such as Ghostty, kitty or WezTerm.
 
 **Keys:** `space` play/pause · `←/→` scrub · `↑/↓` event · `r` restart · `+/-` speed · `f` full screen · `q` quit
 

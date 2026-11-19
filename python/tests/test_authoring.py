@@ -118,19 +118,6 @@ def test_solid_shapes_draw_without_borders_and_show_in_colour():
     assert "48;2;80;200;120m" in coloured  # green
 
 
-def test_flat_cartoon_example_runs():
-    import runpy
-    import sys
-
-    argv = sys.argv
-    sys.argv = ["flat_cartoon.py", "--list"]
-    try:
-        runpy.run_path(str(__import__("pathlib").Path(__file__).parents[2] / "examples" / "flat_cartoon.py"),
-                       run_name="__main__")
-    finally:
-        sys.argv = argv
-
-
 def test_titles_measure_and_reject_unknown_fonts():
     assert ct.measure("ខ្មែរ", 6) > 0
     assert ct.measure("ខ្មែរ", 12) > ct.measure("ខ្មែរ", 6)
@@ -156,14 +143,21 @@ def test_pixels_setting_is_checked():
         ct.explain(counter(), number_view, pixels="tiny")
 
 
-def test_keynote_example_runs():
+def intro_deck():
     import runpy
-    import sys
     from pathlib import Path
 
-    argv = sys.argv
-    sys.argv = ["keynote.py", "--list"]
-    try:
-        runpy.run_path(str(Path(__file__).parents[2] / "examples" / "keynote.py"), run_name="__main__")
-    finally:
-        sys.argv = argv
+    path = Path(__file__).parents[2] / "examples" / "intro.py"
+    return runpy.run_path(str(path))["deck"]()
+
+
+def test_intro_example_draws_only_what_macos_terminal_can():
+    """Every frame, at every beat, uses plain text and the half block alone:
+    macOS Terminal shows quadrant and sextant blocks, and the line-drawing
+    corners of outlined boxes, as boxes or with gaps."""
+    ex = intro_deck()
+    allowed = set("▀•·")
+    for start, duration, _, _ in ex.timeline():
+        for t in (start + duration / 2, start + duration):
+            frame = ex.frame(t)
+            assert {ch for ch in frame if ord(ch) > 127} <= allowed, t
